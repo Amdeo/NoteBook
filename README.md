@@ -12,14 +12,27 @@
 
 ## 2. 算法
 
-- #### 排序
+- #### [排序](https://github.com/Amdeo/NoteBook/blob/master/算法/排序.md) 
 
 - #### 查询
+
+- #### [交换](https://github.com/Amdeo/NoteBook/blob/master/算法/交换.md) 
 
 
 
 ### 3.数据结构
 
-- 链表
+- #### [链表](https://github.com/Amdeo/NoteBook/blob/master/数据结构/链表.md)
 
-  
+
+
+
+
+
+
+
+
+
+
+
+> 前缀 https://github.com/Amdeo/NoteBook/blob/master/
