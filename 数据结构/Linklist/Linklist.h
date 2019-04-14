@@ -13,10 +13,16 @@ public:
 	Linklist();
 	~Linklist();
 	//头插法
-
+	void insert_head(int data);
 	//尾插法
+	void insert_tail(int data);
+	//删除结点
+	bool delete_node(int pos);
+	//选择排序
+	void select_sort();
 
-	//
+	//打印链表
+	void display();
 
 private:
 	ListNode* phead;	//头结点指针
