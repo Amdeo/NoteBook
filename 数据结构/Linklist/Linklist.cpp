@@ -112,24 +112,41 @@ bool Linklist::delete_node(int pos)
 void Linklist::select_sort()
 {
 	ListNode* p = NULL, * q = NULL, *m= NULL;
-	for (p = phead->next;p->next != NULL;p=p->next)
+	for (p = phead->next;p != NULL;p=p->next)
 	{
-		m = p;
+		m = p;//将循环的结点保存
 		for (q=p->next;q != NULL;q=q->next)
 		{
+			//从后面所有的数中找出最小的数
 			if (m->data > q->data)
 			{
 				m = q;
 			}
 		}
+		//最小的结点不是保存的结点，就进行交换
 		if (p != m)
 		{
+			//交换p和m的数据
 			p->data = p->data ^ m->data;
 			m->data = p->data ^ m->data;
 			p->data =  m->data ^ p->data;
 		}
 	}
 }
+
+//直接插入排序
+void Linklist::insert_sort()
+{
+	ListNode* p = NULL, * q = NULL, * m = NULL;
+	for (p = phead;p != NULL;p=p->next)
+	{
+
+	}
+}
+
+//插入排序
+
+
 
 //打印链表(不包括头结点)
 void Linklist::display()

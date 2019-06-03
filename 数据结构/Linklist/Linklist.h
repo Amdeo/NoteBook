@@ -20,7 +20,8 @@ public:
 	bool delete_node(int pos);
 	//—°‘Ò≈≈–Ú
 	void select_sort();
-
+	//≤Â»Î≈≈–Ú
+	void insert_sort();
 	//¥Ú”°¡¥±Ì
 	void display();
 

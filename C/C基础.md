@@ -1,6 +1,18 @@
-##### 1.赋值
+## C基础
 
-> int i, j;
+[TOC]
+
+### 赋值
+
+> int a,b
 >
-> int i = 3, j = 4;
+> int a=1,b=2;
+
+
+
+### 数据结构
+
+基本数据类型：int	float	double	char	
+
+构造数据类型：struct union enum
 
