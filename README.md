@@ -1,8 +1,8 @@
 ## 1. 编程笔记
 
-- #### [C](https://github.com/Amdeo/NoteBook/blob/master/C/C基础.md) 
+- #### [C](https://github.com/Amdeo/NoteBook/blob/master/C%20C%2B%2B/C%E5%9F%BA%E7%A1%80.md) 
 
-- #### [C++](https://github.com/Amdeo/NoteBook/blob/master/C++/C++基础.md) 
+- #### [C++](https://github.com/Amdeo/NoteBook/blob/master/C%20C%2B%2B/C%2B%2B%E5%9F%BA%E7%A1%80.md) 
 
 - #### python
 
