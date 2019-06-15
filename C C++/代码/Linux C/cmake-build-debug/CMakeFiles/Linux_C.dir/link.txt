@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/Linux_C.dir/main.cpp.o CMakeFiles/Linux_C.dir/common.cpp.o  -o Linux_C -lpthread 

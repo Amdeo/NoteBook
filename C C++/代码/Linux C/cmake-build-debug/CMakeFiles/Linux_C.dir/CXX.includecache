@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/e/Project/C++/Linux C/common.h
+iostream
+-
+
+/mnt/e/Project/C++/Linux C/main.cpp
+iostream
+-
+pthread.h
+-
+unistd.h
+-
+common.h
+/mnt/e/Project/C++/Linux C/common.h
+
