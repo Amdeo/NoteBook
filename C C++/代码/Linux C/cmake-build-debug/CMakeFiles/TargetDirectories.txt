@@ -1,3 +1,3 @@
-/mnt/e/Project/C++/Linux C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/mnt/e/Project/C++/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir
-/mnt/e/Project/C++/Linux C/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir
+/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/edit_cache.dir

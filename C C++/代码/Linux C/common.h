@@ -14,4 +14,10 @@ void print_point(T *p)
     cout<< static_cast<void *>(p) <<endl;
 }
 
+template <class T>
+void print_value(T value)
+{
+    cout<< value <<endl;
+}
+
 #endif //LINUX_C_COMMON_H

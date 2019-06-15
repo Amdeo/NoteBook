@@ -1,4 +1,4 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/mnt/e/Project/C++/Linux C"
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C"
 -- Configuring done
 -- Generating done
--- Build files have been written to: /mnt/e/Project/C++/Linux C/cmake-build-debug
+-- Build files have been written to: /mnt/e/work/MYGithub/NoteBook/C C++/浠ｇ爜/Linux C/cmake-build-debug
