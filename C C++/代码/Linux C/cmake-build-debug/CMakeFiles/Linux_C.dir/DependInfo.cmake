@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.cpp" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/common.cpp.o"
-  "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/main.cpp" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/main.cpp.o"
+  "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/common.cpp.o"
+  "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C
+# Install script for directory: /mnt/e/GitHub/NoteBook/C C++/代码/Linux C
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

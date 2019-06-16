@@ -8,12 +8,14 @@
 
 using namespace std;
 
+//打印地址
 template <class T>
 void print_point(T *p)
 {
     cout<< static_cast<void *>(p) <<endl;
 }
 
+//打印值
 template <class T>
 void print_value(T value)
 {

@@ -43,10 +43,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C"
+CMAKE_SOURCE_DIR = "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug"
+CMAKE_BINARY_DIR = "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Linux_C.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/Linux_C.dir/flags.make
 
 CMakeFiles/Linux_C.dir/main.cpp.o: CMakeFiles/Linux_C.dir/flags.make
 CMakeFiles/Linux_C.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Linux_C.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Linux_C.dir/main.cpp.o -c "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Linux_C.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Linux_C.dir/main.cpp.o -c "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp"
 
 CMakeFiles/Linux_C.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Linux_C.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/main.cpp" > CMakeFiles/Linux_C.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp" > CMakeFiles/Linux_C.dir/main.cpp.i
 
 CMakeFiles/Linux_C.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Linux_C.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/main.cpp" -o CMakeFiles/Linux_C.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp" -o CMakeFiles/Linux_C.dir/main.cpp.s
 
 CMakeFiles/Linux_C.dir/common.cpp.o: CMakeFiles/Linux_C.dir/flags.make
 CMakeFiles/Linux_C.dir/common.cpp.o: ../common.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Linux_C.dir/common.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Linux_C.dir/common.cpp.o -c "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Linux_C.dir/common.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Linux_C.dir/common.cpp.o -c "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp"
 
 CMakeFiles/Linux_C.dir/common.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Linux_C.dir/common.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.cpp" > CMakeFiles/Linux_C.dir/common.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp" > CMakeFiles/Linux_C.dir/common.cpp.i
 
 CMakeFiles/Linux_C.dir/common.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Linux_C.dir/common.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.cpp" -o CMakeFiles/Linux_C.dir/common.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp" -o CMakeFiles/Linux_C.dir/common.cpp.s
 
 # Object files for target Linux_C
 Linux_C_OBJECTS = \
@@ -95,7 +95,7 @@ Linux_C: CMakeFiles/Linux_C.dir/main.cpp.o
 Linux_C: CMakeFiles/Linux_C.dir/common.cpp.o
 Linux_C: CMakeFiles/Linux_C.dir/build.make
 Linux_C: CMakeFiles/Linux_C.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Linux_C"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Linux_C"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Linux_C.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +108,6 @@ CMakeFiles/Linux_C.dir/clean:
 .PHONY : CMakeFiles/Linux_C.dir/clean
 
 CMakeFiles/Linux_C.dir/depend:
-	cd "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug" "/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/Linux_C.dir/depend
 

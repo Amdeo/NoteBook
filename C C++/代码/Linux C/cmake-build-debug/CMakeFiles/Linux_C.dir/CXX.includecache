@@ -6,17 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
 iostream
 -
 
-/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/main.cpp
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp
 iostream
--
-pthread.h
 -
 unistd.h
 -
 common.h
-/mnt/e/work/MYGithub/NoteBook/C C++/代码/Linux C/common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
+unistd.h
+-
+sys/types.h
+-
 

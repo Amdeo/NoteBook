@@ -1,37 +1,39 @@
 #include <iostream>
-#include <pthread.h>
 #include <unistd.h>
 #include "common.h"
+#include<unistd.h>
+#include<sys/types.h>
 
 using namespace std;
 
 int main() {
-//    int a[] = {1,2,3,4,5};
-//    print_point(a);
-//    print_point(a+1);
-//    print_point(&a);
-//    print_point(&a+1);
+    pid_t pid;
+    int i = 0;
+    cout<<"before fork\n";
+    pid = fork();
+    cout<<"after fork\n";
+    if (pid < 0)
+    {
+        cout<< "fork failed" <<endl;
+    }
+    else if(pid == 0)   //子进程
+    {
+        while (i<10) {
+            cout << "I am child,i = " << i << endl;
+            i += 1;
+        }
+        cout << "child process is " << getpid() << endl;
+    }
+    else{
+        //父进程
+        //sleep(10);
+        while (i<10){
+            cout<<"I am parent,i = "<<i<<endl;
+            i += 2;
+        }
 
-    int a[][3]={1,2,3,4,5,6,7,8,9};
-    print_point(a);
-    print_point(a[0]);
-
-    print_point(a+1);
-    print_point(*(a+1));
-    print_point(a[1]);
-    print_point(a[1]+1);
-    print_value(*(a[1]+1));
-    print_value(*(*(a+1)+1));
-
-    print_point(a+2);
-    print_point(a[2]);
-
-    print_point(&a);
-    print_point(&a+1);
-
-
-
-    print_value(*(a[0]));
-    print_value(*(a[1]));
+        cout<< "parent process is " <<getpid()<<endl;
+    }
+    cout<<"exit process\n";
     return 0;
 }
