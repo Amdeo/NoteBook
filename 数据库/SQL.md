@@ -78,7 +78,7 @@ drop database database_name;
 **删除索引**
 
 ```sql
-alter table table_name drop index index_name
+alter table table_name drop index index_name;
 ```
 
 
@@ -132,6 +132,88 @@ delete from table_name where condition;
 
 七、查询
 ===
+
+**获取表中全部数据**
+
+```sql
+select * from table_name where condition;
+```
+
+**获取指定列数据**
+
+```sql
+select column(s) from table_name where condition;
+```
+
+**获取指定列排序的数据**
+
+```sql
+select column(s) from table_name where condition order by column; --按照column(默认升序)
+
+--ASC ：升序（默认）DESC ：降序 使用方法 order by column (ASC 或者 DESC)
+
+```
+
+**获取数据指定条数**
+
+mysql:
+
+```sql
+select column(s) from table_name where condition limit 3; -- 获取前3条数据
+
+select column(s) from table_name where condition limit 3-2; -- 获取第4条、5条数据
+```
+
+oracle:
+
+```sql
+select column(s) from table_name where condition rownum <= number;
+```
+
+**获取不重复的值**
+
+相同值只会出现一次。它作用于所有列，也就是说所有列的值都相同才算相同。
+
+```sql
+select distinct column(s) from table_name where condition;
+```
+
+
+
+
+
+
+
+# 八、条件
+
+**模糊匹配like：**
+
+```sql
+select * from table_name where column like pattern;
+-- pattern %xx  %xx%  xx%
+
+select * from table_name where column like '_xxx' -- '_'替换一个字符
+
+select * from table_name where column like '[abc]xxx'
+--条件可以看作axxx bxxx cxxx 即[abc] 指列表中的任意字符
+--[^abc]和[!abc]非abc中任一字符
+```
+
+IN操作符
+
+```sql
+select * from table_name where column in (val1,val2,val3);
+```
+
+between操作符
+
+```sql
+select * from table_name where column between val1 and val2; --val1和val2之间
+```
+
+
+
+
 
 
 
