@@ -22,7 +22,7 @@ socket类型
 
 
 
-```
+```C++
 int socket(int domain,int type,int protocol);
 
 int bind(int sockfd,struct sockaddr * my_addr.int addrlen);
