@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Linux_C.dir/main.cpp.o"
   "CMakeFiles/Linux_C.dir/common.cpp.o"
+  "CMakeFiles/Linux_C.dir/func.cpp.o"
   "Linux_C.pdb"
   "Linux_C"
 )

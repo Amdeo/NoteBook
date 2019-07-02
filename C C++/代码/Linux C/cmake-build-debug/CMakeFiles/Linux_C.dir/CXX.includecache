@@ -6,19 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
+/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/common.h
 iostream
 -
 
-/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp
+/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.cpp
+func.h
+/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.h
 iostream
 -
 unistd.h
 -
 common.h
-/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
+/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/common.h
 unistd.h
 -
 sys/types.h
 -
+
+/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.h
 

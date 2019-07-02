@@ -73,7 +73,6 @@ int sendto(int sockfd,const void *msg,int len,unsigned int flags,struct sockaddr
 
 int recvfrom(int sockfd,void *buf,int len,unsigned int flags,struct sockaddr * from,int *fromlen)
 
-
 int fcntl(int fd, int cmd, long arg)
 ```
 
