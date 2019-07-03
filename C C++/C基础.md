@@ -30,19 +30,63 @@
 | double         | 8    | -1.7 *10^-308~1.7 *10^308(有效数字 15 -16)   |
 | long double    | 12   | -1.2 *10^-4932~1.2 *10^4932(有效数字 18 -19) |
 
+
+
 #### struct、union 、enum的大小
 
-```
-struct 
+设置字节对齐
+
+> #pragma pack(4)   //设置4字节对齐 等价于#pragma pack(push,2)
+>
+> #pragma pack()     //取消自定义字节对齐方式  等价于#pragma pack(pop)
+
+**struct**
+
+```C++
+//4字节对齐
+struct Mystruct
 {
-	int a;
-	long b;
-	int a[10];
-}
-
+	char a		//1 + 3 不够4字节，补齐到4字节
+	int b;		//4
+	long c;		//4
+	int d[10];	//40
+}e;
+/*
+-------
+sizeof(e)输出:52
+-------
+*/
 ```
 
+**union**
 
+```C++
+union
+{
+    int a;		//4
+	long b;		//4
+	int c[10];	//40
+}e;
+/*
+-------
+sizeof(e)输出:40
+-------
+*/
+```
 
+**enum**
 
+```C++
+enum
+{
+	a = 1;
+	b;
+	c;
+}d;
+/*
+-------
+sizeof(d)输出:4
+-------
+*/
+```
 
