@@ -20,6 +20,6 @@
 
 #### 工具
 
-- vim
+- [vim](https://github.com/Amdeo/NoteBook/blob/master/%E5%B7%A5%E5%85%B7/VIM.md)
 
 
