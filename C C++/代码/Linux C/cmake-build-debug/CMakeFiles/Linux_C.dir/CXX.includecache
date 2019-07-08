@@ -23,6 +23,8 @@ unistd.h
 -
 sys/types.h
 -
+array
+-
 
 /Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.h
 

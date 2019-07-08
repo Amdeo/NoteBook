@@ -8,6 +8,7 @@
 namespace ydb
 {
     void process_test();
+    void arraytest();
 }
 
 

@@ -5,8 +5,9 @@
 #include <iostream>
 #include <unistd.h>
 #include "common.h"
-#include<unistd.h>
-#include<sys/types.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <array>
 
 
 void ydb::process_test()
@@ -39,4 +40,31 @@ void ydb::process_test()
         cout<< "parent process is " <<getpid()<<endl;
     }
     cout<<"exit process\n";
+}
+
+void ydb::arraytest()
+{
+//    array<int,5> myarray = {1,2,3,4,5};
+//    for(array<int,5>::iterator it = myarray.begin();it != myarray.end();++it)
+//        cout<<' '<< *it;
+//    cout<<"\n";
+
+//    for(array<int,5>::reverse_iterator iter = myarray.rbegin();iter != myarray.rend();++iter)
+//        cout<<' '<< *iter;
+//    cout<<"\n";
+//    array<int,5> myarray = {1,2,3,4,5};
+//    for(array<int,5>::const_iterator it = myarray.cbegin();it != myarray.cend();++it)
+//        cout<<' '<< *it;
+//        cout<<"\n";
+
+//    array<int,5> myarray = {1,2,3,4,5};
+//    for(array<int,5>::const_reverse_iterator it = myarray.crbegin();it != myarray.crend();++it)
+//        cout<<' '<< *it;
+//    cout<<"\n";
+
+
+
+
+
+
 }
