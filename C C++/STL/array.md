@@ -31,7 +31,23 @@ array 是固定大小的顺序容器，它们保存了一个以严格的线性�
 | get（array）                 | 形如 `std::get<0>(myarray)`；传入一个数组容器，返回指定位置元素的引用 |
 | relational operators (array) | 形如 `arrayA > arrayB`；依此比较数组每个元素的大小关系       |
 
-## begin和end
+## 访问
+
+```C++
+#include <iostream>
+#include <array>
+
+int main()
+{
+    std::array<int,5> myarray = {1,2,3,4,5};
+   	std::cout<< myarray[0] <<std::endl;
+}
+
+```
+
+## 遍历
+
+### begin和end
 
 ```C++
 #include <array>
@@ -52,7 +68,7 @@ output:
 
 ```
 
-## rbegin和rend
+### rbegin和rend
 
 ```C++
 #include <array>
@@ -71,9 +87,7 @@ output:
 */
 ```
 
-
-
-## cbegin和cend
+### cbegin和cend
 
 ```C++
 #include <iostream>
@@ -100,9 +114,7 @@ Output
 myarray contains: 2 16 77 34 50
 ```
 
-
-
-## crbegin和crend
+### crbegin和crend
 
 ```C++
 #include <iostream>
@@ -126,5 +138,29 @@ Output
 
 ```
 myarray contains: 2 16 77 34 50
+```
+
+## 其他算法
+
+```C++
+#include <iostream>
+#include <array>
+using namespace std;
+int main()
+{
+	std::array<int, 5> myarray = { 1,2,3,4,5 };
+	std::cout << myarray[0] << std::endl;
+	cout << "myarray size is " << myarray.size() << endl;	//元素个数
+	cout << "myarray max_size is " << myarray.max_size() << endl;
+	cout<< "myarray at 3 is " << myarray.at(0) <<endl;			//返回第一个元素的引用
+	cout << "myarray data is " << *(myarray.data()) << endl;   //返回第一个元素的指针
+    
+    myarray.fill(2); //将所有元素置成2
+	for (auto it = myarray.begin();it != myarray.end();it++)
+		cout<< *it <<endl;
+    
+	getchar();
+}
+
 ```
 
