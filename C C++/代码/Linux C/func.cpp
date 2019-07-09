@@ -57,10 +57,10 @@ void ydb::arraytest()
 //        cout<<' '<< *it;
 //        cout<<"\n";
 
-//    array<int,5> myarray = {1,2,3,4,5};
-//    for(array<int,5>::const_reverse_iterator it = myarray.crbegin();it != myarray.crend();++it)
-//        cout<<' '<< *it;
-//    cout<<"\n";
+    array<int,5> myarray = {1,2,3,4,5};
+    for(array<int,5>::const_reverse_iterator it = myarray.crbegin();it != myarray.crend();++it)
+        cout<<' '<< *it;
+    cout<<"\n";
 
 
 
