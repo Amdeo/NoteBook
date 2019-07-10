@@ -24,7 +24,7 @@ g++ test.cpp -o test
 
 ```makefile
 test: test.cpp
-      g++ test.cpp -o test
+g++ test.cpp -o test
 ```
 
 test是最终生成的目标文件
@@ -75,10 +75,10 @@ int main()
 
 ```makefile
 test: test.cpp fun1.o
-	g++ test.cpp fun1.o -o test
+g++ test.cpp fun1.o -o test
 fun1.o: fun1.cpp
-	g++ -c fun1.cpp
+g++ -c fun1.cpp
 clean:
-	rm *.o test
+rm *.o test
 ```
 
