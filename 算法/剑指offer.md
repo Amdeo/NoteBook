@@ -1,4 +1,4 @@
-### 题目一：赋值运算符函数
+### 1 赋值运算符函数
 
 > 如下为类型CMyString的声明，请为该类型添加赋值运算符函数
 >
@@ -35,3 +35,4 @@ CMyString& CMyString::operate=(const CMyString &str)
 }
 ```
 
+2 
