@@ -18,7 +18,7 @@ deque（['dek]）（双端队列）是double-ended queue 的一个不规则缩�
 namespace std 
 {
     template <typename T,typename Allocator = allocator<T> >
-		class deque;
+	class deque;
 }
 ```
 
@@ -72,7 +72,6 @@ c1 > c2 //判断c1是否大于c2
 c1 <= c2 //判断c1是否小于等于c2
 
 c1 >= c2 //判断c1是否大于等于c2
-
 ```
 
 ### 赋值
@@ -93,7 +92,6 @@ c.assign(beg,end) //使用beg到end范围内的元素进行赋值
 c1.swap(c2) //交换c1和c2的数
 
 swap(c1,c2) //交换c1和c2的数
-
 ```
 
 ### 元素存取
@@ -162,7 +160,6 @@ c.resize(num) //将元素数量设为num（如果size()增大，多出来的元�
 c.resize(num,elem) //将元素数量设为num（如果size()增大，多出来的元素都是elem的副本）
 
 c.clear() //移除所以元素，清空容器
-
 ```
 
 ### 例子
