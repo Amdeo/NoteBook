@@ -86,3 +86,415 @@ main(){
 
 则编译通过
 编译期大胆地将func()做了优化，在编译期就确定了func计算出的值10而无需等到运行时再去计算。
+
+## auto
+
+auto可以进行类型自动推导
+
+使用 `auto` 进行类型推导的一个最为常见而且显著的例子就是迭代器。在以前我们需要这样来书写一个迭代器：
+
+```C++
+for(vector<int>::const_iterator itr = vec.cbegin(); itr != vec.cend(); ++itr)
+
+//使用auto
+// 由于 cbegin() 将返回 vector<int>::const_iterator 
+// 所以 itr 也应该是 vector<int>::const_iterator 类型
+for(auto itr = vec.cbegin(); itr != vec.cend(); ++itr);
+```
+
+> **注意**：`auto` 不能用于函数传参，因此下面的做法是无法通过编译的（考虑重载的问题，我们应该使用模板）：
+
+## decltype
+
+`decltype` 关键字是为了解决 auto 关键字只能对变量进行类型推导的缺陷而出现的。它的用法和 `sizeof` 很相似：
+
+```C++
+auto x = 1;
+auto y = 2;
+decltype(x+y) z;//这里我们可以推导出x+y的类型
+```
+
+使用
+
+```C++
+template<typename T, typename U>
+auto add(T x, U y) -> decltype(x+y) {
+    return x+y;
+}
+```
+
+C++14
+
+```C++
+template<typename T, typename U>
+auto add(T x, U y) {
+    return x+y;
+}
+```
+
+## 区间迭代
+
+#### 基于范围的 for 循环
+
+终于，C++11 引入了基于范围的迭代写法，我们拥有了能够写出像 Python 一样简洁的循环语句：
+
+```C++
+int array[] = {1,2,3,4,5};
+//遍历数组
+for(auto &x : array) {
+    std::cout << x << std::endl;
+}
+```
+
+## 列表初始化
+
+在c++11之前列表初始化
+
+传统 C++中，普通数组、没有构造析构和虚函数的类或结构体都可以使用 {} 进行初始化，也就是我们所说的初始化列表。
+而对于类对象的初始化，要么需要通过拷贝构造、要么就需要使用 () 进行，不支持{}。
+
+```
+//初始化列表
+int a = {1,2,3,4,5};	//普通数组
+
+struct A
+{
+    int x;
+    struct B
+    {
+        int i;
+        int j;
+    } b;
+} a = { 1, { 2, 3 } };  //POD类型
+```
+
+C++11新增加初始化列表std::initializer_list<>类型，可以通过{}语法来构造初始化列表，初始化列表是常数；一旦被创建，其成员均不能被改变，成员中的数据也不能够被变动。函数能够使用初始化列表作为参数。 
+
+在引入C++ 11之前，有各种不同的初始化语法。在C++ 11中，仍可以使用这些初始化语法，但也可以选择使用新引入的统一的初始化语法。统一的初始化语法用一对大括号{}表示。 
+
+```
+std::vector<string> v1 = {"hello", "world", "welcome"}; 
+std::vector<int> v2 = {0, 3, 8, 1, 4};
+```
+
+C++11引入了一个新的初始化方式，称为初始化列表(List Initialize)，具体的初始化方式如下：
+
+```C++
+int static_arr[5] = { 1, 2, 3, 4 };
+int static_arr2[]{ 1, 2, 3, 4 }; // 等号要以省略
+int* dynamic_arr = new int[5]{ 1, 2, 3, 4 };
+vector<int> stl_vec{ 1, 2, 3, 4 };
+set<int> stl_set{ 1, 2, 3, 3 };
+map<const char*, int> stl_map
+{
+    { "Alice", 1 },
+    { "Bob", 2 },
+    { "Cindy", 3 }
+};
+```
+
+C++11将初始化列表解释成一个initializer_list<T>类型的变量（T是列表中元素的类型）。
+它相当于一个只读的容器，只有三个成员函数：size()，begin()和end()。
+在上面这个例子中，我们用初始化列表为STL容器提供初值。
+C++11为STL容器新增了一种构造函数，它可以接收一个initializer_list。
+
+```C++
+#include <initializer_list> // This header is required
+#include <iostream>
+
+using namespace std;
+
+template <class Tp>
+void print_ilist(const initializer_list<Tp> &ilist)
+{
+    for (auto it = ilist.begin(); it != ilist.end(); ++it)
+        cout << *it << endl;
+}
+
+struct Foo
+{
+    int vals[10];
+    int n = 0;
+
+    Foo(const initializer_list<int> &ilist) {
+        for (int v : ilist)
+            vals[n++] = v;
+    }
+};
+
+int main()
+{
+    initializer_list<int> empty_ilist;
+    empty_ilist = { 1, 2, 3, 4 };
+    cout << empty_ilist.size() << endl; // 4
+
+    Foo foo{ 1, 2, 3 };
+    Foo bar(empty_ilist);
+    cout << "bar.n = " << bar.n << endl; // 4
+
+    initializer_list<float> float_ilist{ 1.0, 1.2, 1.5, 2.0 };
+    print_ilist(float_ilist);
+    print_ilist({ "Reimu", "Marisa", "Sanae", "Reisen" });
+    return 0;
+}
+```
+
+## 模板增强
+
+在传统C++的编译器中，>>一律被当做右移运算来进行处理，但实际上我们很容易就写出了嵌套模板的代码：
+
+```C++
+std::vector<std::vector<int>> wow;
+```
+
+这在传统C++编译器下是不能够被编译的，而 C++11 开始，连续的右尖括号将变得合法，并且能够顺利通过编译。
+
+### 类型别名模板
+
+在了解类型别名模板之前，需要理解『模板』和『类型』之间的不同。仔细体会这句话：**模板是用来产生类型的。**在传统 C++中，`typedef` 可以为类型定义一个新的名称，但是却没有办法为模板定义一个新的名称。因为，模板不是类型。例如：
+
+```C++
+template< typename T, typename U, int value>
+class SuckType {
+public:
+    T a;
+    U b;
+    SuckType():a(value),b(value){}
+};
+template< typename U>
+typedef SuckType<std::vector<int>, U, 1> NewType; // 不合法
+```
+
+C++11 使用 `using` 引入了下面这种形式的写法，并且同时支持对传统 `typedef` 相同的功效：
+
+> 通常我们使用 `typedef` 定义别名的语法是：`typedef 原名称 新名称;`，但是对函数指针等别名的定义语法却不相同，这通常给直接阅读造成了一定程度的困难。
+
+```C++
+typedef int (*process)(void *);  // 定义了一个返回类型为 int，参数为 void* 的函数指针类型，名字叫做 process
+using process = int(*)(void *); // 同上, 更加直观
+
+template <typename T>
+using NewType = SuckType<int, T, 1>;    // 合法
+```
+
+### 默认模板参数
+
+```C++
+template<typename T = int, typename U = int>
+auto add(T x, U y) -> decltype(x+y) {
+    return x+y;
+}
+```
+
+### 变长参数模板
+
+模板一直是 C++ 所独有的黑魔法（一起念：**Dark Magic**）之一。在 C++11 之前，无论是类模板还是函数模板，都只能按其指定的样子，接受一组固定数量的模板参数；而 C++11 加入了新的表示方法，允许任意个数、任意类别的模板参数，同时也不需要在定义时将参数的个数固定。
+
+```
+template<typename... Ts> class Magic;
+```
+
+模板类 Magic 的对象，能够接受不受限制个数的 typename 作为模板的形式参数，例如下面的定义：
+
+```c++
+class Magic<int, 
+            std::vector<int>, 
+            std::map<std::string, std::vector<int>>> darkMagic;
+```
+
+既然是任意形式，所以个数为0的模板参数也是可以的：`class Magic<> nothing;`。
+
+如果不希望产生的模板参数个数为0，可以手动的定义至少一个模板参数：
+
+```C++
+template<typename Require, typename... Args> class Magic;
+```
+
+首先，我们可以使用 `sizeof...` 来计算参数的个数，：
+
+```C++
+template<typename... Args>
+void magic(Args... args) {
+    std::cout << sizeof...(args) << std::endl;
+}
+```
+
+我们可以传递任意个参数给 `magic` 函数：
+
+```C++
+magic();        // 输出0
+magic(1);       // 输出1
+magic(1, "");   // 输出2
+```
+
+### **1. 递归模板函数**
+
+递归是非常容易想到的一种手段，也是最经典的处理方法。这种方法不断递归的向函数传递模板参数，进而达到递归遍历所有模板参数的目的：
+
+```
+#include <iostream>
+template<typename T>
+void printf(T value) {
+    std::cout << value << std::endl;
+}
+template<typename T, typename... Args>
+void printf(T value, Args... args) {
+    std::cout << value << std::endl;
+    printf(args...);
+}
+int main() {
+    printf(1, 2, "123", 1.1);
+    return 0;
+}
+```
+
+### **2. 初始化列表展开**
+
+> 这个方法需要之后介绍的知识，读者可以简单阅读以下，将这个代码段保存，在后面的内容了解过了之后再回过头来阅读此处方法会大有收获。
+
+递归模板函数是一种标准的做法，但缺点显而易见的在于必须定义一个终止递归的函数。
+
+这里介绍一种使用初始化列表展开的黑魔法：
+
+```C++
+// 编译这个代码需要开启 -std=c++14
+// 因为版本原因，实验环境中的 g++ 尚不支持此特性，此处可以使用 clang++ 替代 g++
+template<typename T, typename... Args>
+auto print(T value, Args... args) {
+    std::cout << value << std::endl;
+    return std::initializer_list<T>{([&] {
+        std::cout << args << std::endl;
+    }(), value)...};
+}
+int main() {
+    print(1, 2.1, "123");
+    return 0;
+}
+```
+
+## 面向对象增强
+
+#### 委托构造
+
+C++11 引入了委托构造的概念，这使得构造函数可以在同一个类中一个构造函数调用另一个构造函数，从而达到简化代码的目的：
+
+```C++
+class Base {
+public:
+    int value1;
+    int value2;
+    Base() {
+        value1 = 1;
+    }
+    Base(int value) : Base() {  // 委托 Base() 构造函数
+        value2 = 2;
+    }
+};
+
+int main() {
+    Base b(2);
+    std::cout << b.value1 << std::endl;
+    std::cout << b.value2 << std::endl;
+}
+```
+
+#### 继承构造
+
+在传统 C++ 中，构造函数如果需要继承是需要将参数一一传递的，这将导致效率低下。C++11 利用关键字 using 引入了继承构造函数的概念：
+
+```C++
+class Base {
+public:
+    int value1;
+    int value2;
+    Base() {
+        value1 = 1;
+    }
+    Base(int value) : Base() {                          // 委托 Base() 构造函数
+        value2 = 2;
+    }
+};
+class Subclass : public Base {
+public:
+    using Base::Base;  // 继承构造
+};
+int main() {
+    Subclass s(3);
+    std::cout << s.value1 << std::endl;
+    std::cout << s.value2 << std::endl;
+}
+```
+
+#### 显式虚函数重载
+
+在传统 C++中，经常容易发生意外重载虚函数的事情。例如：
+
+```C++
+struct Base {
+    virtual void foo();
+};
+struct SubClass: Base {
+    void foo();
+};
+```
+
+`SubClass::foo` 可能并不是程序员尝试重载虚函数，只是恰好加入了一个具有相同名字的函数。另一个可能的情形是，当基类的虚函数被删除后，子类拥有旧的函数就不再重载该虚拟函数并摇身一变成为了一个普通的类方法，这将造成灾难性的后果。
+
+C++11 引入了 `override` 和 `final` 这两个关键字来防止上述情形的发生。
+
+#### override
+
+当重载虚函数时，引入 `override` 关键字将显式的告知编译器进行重载，编译器将检查基函数是否存在这样的虚函数，否则将无法通过编译：
+
+```C++
+struct Base {
+    virtual void foo(int);
+};
+struct SubClass: Base {
+    virtual void foo(int) override; // 合法
+    virtual void foo(float) override; // 非法, 父类没有此虚函数
+};
+```
+
+#### final
+
+`final` 则是为了防止类被继续继承以及终止虚函数继续重载引入的。
+
+```C++
+struct Base {
+        virtual void foo() final;
+};
+struct SubClass1 final: Base {
+};                  // 合法
+
+struct SubClass2 : SubClass1 {
+};                  // 非法, SubClass 已 final
+
+struct SubClass3: Base {
+        void foo(); // 非法, foo 已 final
+};
+```
+
+#### 显式禁用默认函数
+
+在传统 C++ 中，如果程序员没有提供，编译器会默认为对象生成默认构造函数、复制构造、赋值算符以及析构函数。另外，C++ 也为所有类定义了诸如 `new` `delete` 这样的运算符。当程序员有需要时，可以重载这部分函数。
+
+这就引发了一些需求：无法精确控制默认函数的生成行为。例如禁止类的拷贝时，必须将赋值构造函数与赋值算符声明为 `private`。尝试使用这些未定义的函数将导致编译或链接错误，则是一种非常不优雅的方式。
+
+并且，编译器产生的默认构造函数与用户定义的构造函数无法同时存在。若用户定义了任何构造函数，编译器将不再生成默认构造函数，但有时候我们却希望同时拥有这两种构造函数，这就造成了尴尬。
+
+C++11 提供了上述需求的解决方案，允许显式的声明采用或拒绝编译器自带的函数。例如：
+
+```C++
+class Magic {
+public:
+    Magic() = default;  // 显式声明使用编译器生成的构造
+    Magic& operator=(const Magic&) = delete; // 显式声明拒绝编译器生成构造
+    Magic(int magic_number);
+}
+```
+
+### lambda表达式
+
+lamdba表达式其实在其他语言中广泛使用，它就是一个匿名函数
+
