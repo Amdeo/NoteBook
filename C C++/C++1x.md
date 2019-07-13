@@ -43,6 +43,8 @@ extern "C"表示的一种编译和连接规约，而不是一种语言，仅指�
 
 ## nullptr 与 constexpr
 
+### nullptr
+
 nullptr出现的目的是为了替代了NULL，在某种意义上会把NULL和0视为同一种东西，这取决于编译器如何定义NULL，有的编译器会将NULL定义为((void*)0),
 
 ```C++
@@ -59,3 +61,28 @@ void foo(int);
 对于这两个函数来说，如果 `NULL` 又被定义为了 `0` 那么 `foo(NULL);` 这个语句将会去调用 `foo(int)`，从而导致代码违反直观。
 
 C++11引入了nullptr关键字，专门用来区分空指针，`nullptr` 的类型为 `nullptr_t`，能够隐式的转换为任何指针或成员指针的类型，也能和他们进行相等或者不等的比较。
+
+### constexpr
+
+constexpr可以用来修饰变量、函数、构造函数，一旦以上任何元素被constexpr修饰，那么等于说是告诉编译器 “请大胆地将我看成编译时就能得出常量值的表达式去优化我”。
+
+```C++
+const int func() {
+    return 10;
+}
+main(){
+  int arr[func()];
+}
+//error : 函数调用在常量表达式中必须具有常量值
+
+constexpr func() {
+    return 10;
+}
+main(){
+  int arr[func()];
+}
+//编译通过
+```
+
+则编译通过
+编译期大胆地将func()做了优化，在编译期就确定了func计算出的值10而无需等到运行时再去计算。
