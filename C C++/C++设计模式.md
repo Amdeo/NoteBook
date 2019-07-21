@@ -72,7 +72,34 @@ Template method(模板模式)
 
 ## 单例模式
 
+保证一个类仅有一个实例，并提供一个该实例的全局访问点。
+
 - 创建一个类，这个类永远只能生成一个实例。
+
+```C++
+class singleton
+{
+public:
+	static singleton* getinstance();
+  singleton* m_pInstance;
+private:
+  //不声明默认构造函数和拷贝构造函数，编译器会自动生成，所有这里我们自己声明在私有的吗，外部就不能调用了。
+  singleton(); 
+  singleton(const singleton&);
+}
+```
+
+```C++
+//单进程使用
+singleton* singleton::getinstance()
+{
+	if(m_pInstance == NULL)
+  {
+    m_pInstance = new singleton();
+  }
+	return m_pInstance
+}
+```
 
 
 
