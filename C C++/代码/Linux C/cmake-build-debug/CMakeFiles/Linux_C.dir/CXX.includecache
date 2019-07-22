@@ -6,19 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp
+common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
+
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
 iostream
 -
 
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.cpp
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/func.cpp
 func.h
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/func.h
 iostream
 -
 unistd.h
 -
 common.h
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
 unistd.h
 -
 sys/types.h
@@ -26,5 +30,11 @@ sys/types.h
 array
 -
 
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/func.h
+
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp
+common.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.h
+func.h
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/func.h
 

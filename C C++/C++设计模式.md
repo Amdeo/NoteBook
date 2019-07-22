@@ -89,23 +89,55 @@ private:
 }
 ```
 
+
+
 ```C++
-//单进程使用
+//单进程使用 线程不安全
 singleton* singleton::getinstance()
 {
 	if(m_pInstance == NULL)
-  {
-    m_pInstance = new singleton();
-  }
+    {
+        //如果多个线程同时进入这里，这时就会产生多个实例
+        m_pInstance = new singleton();
+    }
 	return m_pInstance
 }
 ```
 
 
 
+```C++
+//考虑多线程 加锁
+//进入函数进行加锁，函数执行完锁变量释放，下个线程就能继续执行函数
+singleton* singleton::getinstance()
+{	
+    Lock lock； //加锁 调用函数都加锁 消耗太大了
+	if(m_pInstance == NULL)
+	{
+        m_pInstance = new singleton();
+    }
+	return m_pInstance
+}
+//锁释放
+```
 
+双检查锁
 
-
+```C++
+//双检查锁
+singleton* singleton::getinstance()
+{	
+    if(m_pInstance == NULL)
+    {
+        Lock lock； //加锁  最差情况下会阻塞几个线程，只有实例创建完成，之后所有调用这个函数，不会加锁了
+        if(m_pInstance == NULL)
+        {
+            m_pInstance = new singleton();
+        }      
+    } 
+	return m_pInstance
+}
+```
 
 
 
