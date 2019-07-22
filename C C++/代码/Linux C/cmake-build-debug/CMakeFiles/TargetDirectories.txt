@@ -1,3 +1,3 @@
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir
+/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/edit_cache.dir

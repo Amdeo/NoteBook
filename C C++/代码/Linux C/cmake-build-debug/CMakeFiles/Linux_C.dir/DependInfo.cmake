@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/common.cpp" "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/common.cpp.o"
-  "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/func.cpp" "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/func.cpp.o"
-  "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/main.cpp" "/Users/amdeo/Documents/Github/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/main.cpp.o"
+  "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/common.cpp" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/common.cpp.o"
+  "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/func.cpp" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/func.cpp.o"
+  "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/main.cpp" "/mnt/e/GitHub/NoteBook/C C++/代码/Linux C/cmake-build-debug/CMakeFiles/Linux_C.dir/main.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "AppleClang")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

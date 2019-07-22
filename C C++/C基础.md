@@ -90,3 +90,24 @@ sizeof(d)输出:4
 */
 ```
 
+
+
+### 变量在if for 的生命周期
+
+在if和for的代码块中定义的变量，变量的生命周期只有在if和for的范围中。
+
+```C++
+//if的生命周期
+#include <iostream>
+using  namespace std;
+int main() {
+    if(1)
+    {
+        int a = 1;
+        cout<< a <<endl;
+    }
+    cout<< a <<endl; //编译报错，变量未定义
+    return 0;
+}
+```
+
