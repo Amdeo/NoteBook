@@ -173,6 +173,48 @@ singleton* singleton::getinstance()
 
 ## 简单工厂模式
 
+简单工厂模式又称为静态工厂模式，通过一个类来负责创建其他类的实例，被创建的实例一般都是继承同一个类。
+
+创建工厂
+
+```C++
+class Factory
+{
+	//创建一个静态方法实例化其他的类
+    static Fruit* create(string name)
+    {
+        Fruit * temp = NULL;
+        if(strcmp(name,"Banana"))
+        {
+            temp = new Banana();
+        }
+        else if(strcmp(name,"Pear"))
+        {
+            temp = new Pear();
+        }
+        return tmep;
+    }
+}
+
+class Fruit
+{
+}
+
+class Banana:public Fruit
+{
+
+}
+
+class Pear:public Fruit
+{
+
+}
+```
+
+
+
+
+
 
 
 ## 工厂模式
