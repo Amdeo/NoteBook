@@ -58,9 +58,13 @@ Template method(模板模式)
 
 ### 模式的分类
 
-- 创建型
-- 结构型
-- 行为型
+|类型	|描述|
+|----------------|----------------|
+|创建型模式（Creational Patterns）|	用于构建对象，以便它们可以从实现系统中分离出来。|
+|结构型模式（Structural Patterns）|	用于在许多不同的对象之间形成大型对象结构。|
+|行为型模式（Behavioral Patterns）| 用于管理对象之间的算法、关系和职责。 |
+
+
 
 ### 组件协作模式：
 
@@ -111,7 +115,7 @@ singleton* singleton::getinstance()
 //进入函数进行加锁，函数执行完锁变量释放，下个线程就能继续执行函数
 singleton* singleton::getinstance()
 {	
-    Lock lock； //加锁 调用函数都加锁 消耗太大了
+    Lock lock； //加锁 调用函数都需要加锁 消耗太大了
 	if(m_pInstance == NULL)
 	{
         m_pInstance = new singleton();
@@ -124,7 +128,7 @@ singleton* singleton::getinstance()
 双检查锁
 
 ```C++
-//双检查锁
+//双检查锁 懒汉模式
 singleton* singleton::getinstance()
 {	
     if(m_pInstance == NULL)
@@ -139,9 +143,76 @@ singleton* singleton::getinstance()
 }
 ```
 
+饿汉模式
+
+```C++
+#include <iostream>
+using namespace std;
+
+class singleton
+{
+public:
+	static singleton* getinstance();
+  	static singleton* m_pInstance; //将实例指针定义为static，在程序一开始运行就会执行它的初始化，它的生命周期是伴随整个程序。
+private:
+  //不声明默认构造函数和拷贝构造函数，编译器会自动生成，所有这里我们自己声明在私有的吗，外部就不能调用了。
+  singleton(); 
+  singleton(const singleton&);
+}
+singleton* singleton::m_pInstance = new singleton();
+
+singleton* singleton::getinstance()
+{
+	return m_pInstance;
+}
+
+//缺点：消耗内存（长期占用内存）
+```
+
 
 
 ## 简单工厂模式
+
+简单工厂模式又称为静态工厂模式，通过一个类来负责创建其他类的实例，被创建的实例一般都是继承同一个类。
+
+优点：通过一个工厂类来实现具体产品的创建，隐藏的产品类的实现，不需要知道具体产品类。
+
+缺点：增加产品，需要修改工厂类，扩展性并不好。
+
+```C++
+//工厂
+class Factory
+{
+	//创建一个静态方法实例化其他的类
+    static Fruit* create(string name)
+    {
+        Fruit * temp = NULL;
+        if(strcmp(name,"Banana"))
+        {
+            temp = new Banana();
+        }
+        else if(strcmp(name,"Pear"))
+        {
+            temp = new Pear();
+        }
+        return tmep;
+    }
+}
+
+class Fruit
+{
+}
+
+class Banana:public Fruit
+{
+
+}
+
+class Pear:public Fruit
+{
+
+}
+```
 
 
 
