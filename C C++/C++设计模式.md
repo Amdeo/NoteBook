@@ -201,16 +201,34 @@ class Factory
 
 class Fruit
 {
+    //.....
+    virtual show() = 0; //纯虚函数
 }
 
 class Banana:public Fruit
 {
-
+	//.....
+	virtual void show()  //子类重写函数可以省略 virtual
+	{
+		cout<<"I am Banana"<<endl;
+	}
 }
 
 class Pear:public Fruit
 {
+	//.....
+	virtual void show()  //子类重写函数可以省略 virtual
+	{
+		cout<<"I am Pear"<<endl;
+	}
+}
 
+int main()
+{
+    
+    Fruit *p = Factory::create("Banana");
+    p->show(); //输出I am Banana
+    return 0;
 }
 ```
 
@@ -221,6 +239,63 @@ class Pear:public Fruit
 是一种常用的对象创建型设计模式，此模式的核心思想是封装类中不变的部分，提取其中个性化善变的部分为独立类，通过依赖注入以达到解耦、复用以及方便后期维护拓展的目的。
 
 一个工厂对应一个产品
+
+```C++
+//产品抽象类
+class abstractFruit
+{
+    virtual show() = 0;
+}
+//工厂抽象类
+class abstactFactory
+{
+    virtual abstractFruit*  create() = 0;
+}
+//产品A类
+class Banana : public abstractFruit
+{
+	virtual show()
+	{
+		cout<<"I am Banana"<<endl;
+	}
+}
+
+//工厂A类
+class BananaFactory : public abstactFactory
+{
+
+}
+//产品Pear
+class Pear :  public abstractFruit
+{
+	virtual show()
+	{
+		cout<<"I am Banana"<<endl;
+	}
+}
+
+//工厂PearFactory
+class PearFactory : public abstactFactory
+{
+
+}
+
+int main()
+{
+    //
+    
+    return 0;
+}
+
+```
+
+
+
+
+
+
+
+
 
 ## 抽象工厂模式
 
