@@ -2,19 +2,13 @@
 
 https://blog.csdn.net/liang19890820/article/details/66974516
 
-
-
 设计模式的作用就是从变化和稳定之间寻找一个隔离点，分离它们，从而管理变化。
 
 Template method(模板模式)
 
-模式定义：
+**模式定义：**
 
 定义一系列算法，把它们一个个封装起来，并且使它们可互相替代（变化），改模式使得算法可独立于使用它的客户程序（稳定）而变化（扩展，子类化）、
-
-策略模式
-
-利用策略模式优化if -else if
 
 变化是复用的天敌，面向对象设计最大的优势在于：抵御变化
 
@@ -238,7 +232,19 @@ int main()
 
 是一种常用的对象创建型设计模式，此模式的核心思想是封装类中不变的部分，提取其中个性化善变的部分为独立类，通过依赖注入以达到解耦、复用以及方便后期维护拓展的目的。
 
-一个工厂对应一个产品
+>  一个工厂对应一个产品.
+
+1) 从简单工厂模式到工厂模式
+
+由于简单工厂模式违背的开发封闭原则，工厂模式就是对简单工厂模式演进。
+
+将核心的一个工厂类，变成一个抽象的接口，使用它的子类进行创建产品。
+
+
+
+优点：系统在不需要修改具体的工厂的情况下增加的新的产品。
+
+缺点：创建一个新的产品需要增加一个新的工厂,加大了额外的开发量。
 
 ```C++
 //产品抽象类
@@ -263,41 +269,59 @@ class Banana : public abstractFruit
 //工厂A类
 class BananaFactory : public abstactFactory
 {
-
+	virtual abstractFruit* create()
+	{
+		return new Banana;
+	}
 }
 //产品Pear
 class Pear :  public abstractFruit
 {
 	virtual show()
 	{
-		cout<<"I am Banana"<<endl;
+		cout<<"I am Pear"<<endl;
 	}
 }
 
 //工厂PearFactory
 class PearFactory : public abstactFactory
 {
-
+	virtual abstractFruit* create()
+	{
+		return new Pear;
+	}
 }
 
 int main()
 {
-    //
-    
+    //先创建工厂，在通过工厂创建产品
+    abstactFactory *pFactory = new  BananaFactory;
+    abstractFruit * pFruit = pFactory->create();
+    pFruit->show(); // output::I am Banana 
+    /*
+    .
+    .
+    .
+    */    
     return 0;
 }
-
 ```
 
 
 
-
-
-
-
-
-
 ## 抽象工厂模式
+
+我们将具有相同属性的产品，放到一个工厂中生产。（产品族的工厂）
+
+**1）工厂模式和抽象工厂模式的区别**
+
+工厂模式是一个类只能生产一个产品
+
+抽象工厂模式是一个类可以生产多个产品
+
+
+
+
 
 
 
