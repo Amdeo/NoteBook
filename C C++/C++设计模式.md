@@ -319,15 +319,36 @@ int main()
 
 抽象工厂模式是一个类可以生产多个产品
 
+```C++
+class BaseFactory
+{
+}
 
+class BaseProduct
+{
+}
+class southapple:public BaseProduct
+{
+}
+class southbanana:public BaseProduct
+{}
 
-
+class southFactory:public BaseFactory
+{
+		BaseProduct * getapple()
+		{
+			return new southapple();
+		}
+		BaseProduct * getbanana()
+		{
+			return new southbanana();
+		}
+}
+```
 
 
 
 ## 建造者模式
-
-
 
 
 
@@ -338,10 +359,6 @@ int main()
 - 就是把需要添加的附加功能分别放在单独的类，并让这个类包含它要装饰的对象。
 
 - 客户端可以有选择、按顺序的的装饰功能包装对象。
-
-
-
-
 
 
 
