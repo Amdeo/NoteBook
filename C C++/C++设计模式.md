@@ -1,4 +1,4 @@
-## 简介
+简介
 
 https://blog.csdn.net/liang19890820/article/details/66974516
 
@@ -344,11 +344,111 @@ class southFactory:public BaseFactory
 			return new southbanana();
 		}
 }
+
+int main()
+{
+	BaseFactory* ptrFactory= new southFactory();
+    BaseProduct* ptrProduct = ptrFactory->getapple();
+    BaseProduct* ptrProduct = ptrFactory->getbanana();    
+    return 0;
+}
 ```
 
 
 
 ## 建造者模式
+
+![1565442183066](assets/1565442183066.png)
+
+- Builder（抽象建造者）：为创建一个产品对象的各个部件指定抽象接口
+
+- ConcreateBuilder(具体建造者)：实现builder的接口以构造和装配该产品的各个部件，定义并明确它所创建的表示，并提供一个检索产品的接口。
+
+- Director（指挥者）：构造一个使用Builder接口的对象
+
+- Product（产品）：表示被构造的复杂对象，ConcreteBuilder创建该产品的内部表示并定义它的装配过程，包含定义组成部件的类，包含将这些部件装配成最终产品的接口。
+
+  
+
+房子
+
+```C++
+class house
+{
+public:
+    void setlength(int length)
+    {
+        this->length = length;
+    }
+    
+    void setwidth(int width)
+    {
+        this->width = width;
+    }
+    
+    void setheight(int height)
+    {
+        this->height = height;
+    }
+private:
+    int length;
+    int width;
+    int height;
+}
+//建造者抽象类
+class Builder
+{
+	virtual void setlength() = 0;
+    virtual void setwidth() = 0;
+    virtual void setheight() = 0;
+    virtual house *GetHouse() = 0;
+}
+//产品A建造者
+class BuilderA : public Builder
+{
+	//建造具体的产品
+}
+//产品B建造者
+class BuilderB : public Builder
+{
+	//建造具体的产品
+}
+
+//指挥者
+class Director
+{
+    void Construct(Builder * builder)
+    {
+        builder->setlength();
+        builder->setwidth();
+        builder->setheight();
+    }
+}
+
+
+```
+
+原型模式
+---
+
+用原型实例指定创建对象的种类，并且通过拷贝这个原型来创建的对象。
+
+
+
+
+
+![1565447965880](assets/1565447965880.png)
+
+- Prototype(抽象原型)：定义了克隆自身多接口。
+- ConcretePrototype（具体原型）：被复制的对象，需要实现Prototype定义的接口
+
+
+
+
+
+
+
+
 
 
 
@@ -359,6 +459,10 @@ class southFactory:public BaseFactory
 - 就是把需要添加的附加功能分别放在单独的类，并让这个类包含它要装饰的对象。
 
 - 客户端可以有选择、按顺序的的装饰功能包装对象。
+
+
+
+
 
 
 
