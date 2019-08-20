@@ -1,3 +1,5 @@
+manjaro安装后配置
+
 ## 更新镜像排名
 
 ```
@@ -45,18 +47,79 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 ```
 
-## Manjaro更新后，中文显示为方框
-
-```
-sudo pacman -S wqy-microhei
-```
-
 ## 安装yaourt、yay
 
 ```
 sudo pacman -S yaourt
 sudo pacman -S yay
 ```
+
+## 安装WPS
+
+```
+sudo pacman -S wps-office
+sudo pacman -S ttf-wps-fonts
+```
+
+解决无法输入中文问题：
+
+`sudo vim /usr/bin/wps`，在第一行（`#!/bin/bash`）下面添加：
+
+```
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+```
+
+## 安装google-chrome浏览器
+
+```
+sudo pacman -S google-chrome
+```
+
+## 网易云音乐
+
+```
+sudo pacman -S netease-cloud-music
+```
+
+### markdown编辑器 typora
+
+```
+yaourt typora
+```
+
+### git客户端 gitkraken
+
+```
+yaourt GitKraken
+```
+
+### 图像编辑器 gimp
+
+```
+sudo pacman -S gimp
+```
+
+### PDF阅读器Foxit
+
+```
+yaourt foxit
+```
+
+### 截图工具深度截图
+
+```
+sudo pacman -S deepin-screenshot
+```
+
+配置系统快捷键
+
+![深度截图_plasmashell_20190819234728](Manjaro.assets/深度截图_plasmashell_20190819234728.png)
+
+![深度截图_plasmashell_20190819234748](Manjaro.assets/深度截图_plasmashell_20190819234748.png)
+
+# 问题
 
 ## majora Pacman正在使用
 
@@ -74,5 +137,13 @@ sogou-qimpanel
 
 ```
 yaourt -S fcitx-qt4
+```
+
+
+
+## Manjaro更新后，中文显示为方框
+
+```
+sudo pacman -S wqy-microhei
 ```
 
