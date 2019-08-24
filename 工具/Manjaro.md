@@ -119,6 +119,20 @@ sudo pacman -S deepin-screenshot
 
 ![深度截图_plasmashell_20190819234748](Manjaro.assets/深度截图_plasmashell_20190819234748.png)
 
+## 安装Anaconda
+
+yaourt anaconda
+source /opt/anaconda/bin/active root 
+
+添加环境变量
+    在〜/ .bashrc中添加
+
+export PATH=/opt/anaconda/bin/:$PATH
+
+
+
+
+
 # 问题
 
 ## majora Pacman正在使用
