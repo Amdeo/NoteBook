@@ -51,14 +51,15 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ```
 
+#### zsh-autosuggestions
 
+```
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+```
 
+Add the following to your .zshrc:
 
+```
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+```
 
-
-
-
-
-
-
-安装
