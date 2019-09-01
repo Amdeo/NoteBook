@@ -1,4 +1,4 @@
-简介
+c简介
 
 https://blog.csdn.net/liang19890820/article/details/66974516
 
@@ -472,10 +472,219 @@ private:
 - 就是把需要添加的附加功能分别放在单独的类，并让这个类包含它要装饰的对象。
 - 客户端可以有选择、按顺序的的装饰功能包装对象。
 
+例如：我们知道咖啡分为很多种，有摩卡咖啡、拿铁咖啡
 
+**创建所有饮料的基类**
 
 ```
+// component.h
+#ifndef COMPONENT_H
+#define COMPONENT_H
 
+#include <string>
+
+using namespace std;
+
+// 所有饮料的基类
+class IBeverage
+{
+public:
+    virtual string Name() = 0;  // 名称
+    virtual double Cost() = 0;  // 价钱
+};
+
+#endif // COMPONENT_H
+```
+
+**创建具体构建**
+
+```
+// concrete_component.h
+#ifndef CONCRETE_COMPONENT_H
+#define CONCRETE_COMPONENT_H
+
+#include "component.h"
+
+/********** 具体的饮料（咖啡）**********/
+
+// 黑咖啡，属于混合咖啡
+class HouseBlend : public IBeverage
+{
+public:
+    string Name() {
+        return "HouseBlend";
+    }
+
+    double Cost() {
+        return 30.0;
+    }
+};
+
+// 深度烘培咖啡豆
+class DarkRoast : public IBeverage
+{
+public:
+    string Name() {
+        return "DarkRoast";
+    }
+
+    double Cost() {
+        return 28.5;
+    }
+};
+
+#endif // CONCRETE_COMPONENT_H
+```
+
+**创建装饰**
+
+```
+// decorator.h
+#ifndef DECORATOR_H
+#define DECORATOR_H
+
+#include "component.h"
+
+// 调味品
+class CondimentDecorator : public IBeverage
+{
+public :
+    CondimentDecorator(IBeverage *beverage) : m_pBeverage(beverage) {}
+
+    string Name() {
+        return m_pBeverage->Name();
+    }
+
+    double Cost() {
+        return m_pBeverage->Cost();
+    }
+
+protected :
+    IBeverage *m_pBeverage;
+} ;
+
+#endif // DECORATOR_H
+```
+
+**创建具体装饰**
+
+```
+// concrete_decorator.h
+#ifndef CONCRETE_DECORATOR_H
+#define CONCRETE_DECORATOR_H
+
+#include "decorator.h"
+
+/********** 具体的饮料（调味品）**********/
+
+// 奶油
+class Cream : public CondimentDecorator
+{
+public:
+    Cream(IBeverage *beverage) : CondimentDecorator(beverage) {}
+
+    string Name() {
+        return m_pBeverage->Name() + " Cream";
+    }
+
+    double Cost() {
+        return m_pBeverage->Cost() + 3.5;
+    }
+};
+
+// 摩卡
+class Mocha : public CondimentDecorator
+{
+public:
+    Mocha(IBeverage *beverage) : CondimentDecorator(beverage) {}
+
+    string Name() {
+        return m_pBeverage->Name() + " Mocha";
+    }
+
+    double Cost() {
+        return m_pBeverage->Cost() + 2.0;
+    }
+};
+
+// 糖浆
+class Syrup : public CondimentDecorator
+{
+public:
+    Syrup(IBeverage *beverage) : CondimentDecorator(beverage) {}
+
+    string Name() {
+        return m_pBeverage->Name() + " Syrup";
+    }
+
+    double Cost() {
+        return m_pBeverage->Cost() + 3.0;
+    }
+};
+
+#endif // CONCRETE_DECORATOR_H
+```
+
+**客服端**
+
+```
+// main.cpp
+#include "concrete_component.h"
+#include "concrete_decorator.h"
+#include <iostream>
+
+#ifndef SAFE_DELETE
+#define SAFE_DELETE(p) { if(p){delete(p); (p)=NULL;} }
+#endif
+
+int main()
+{
+    /********** 黑咖啡 **********/
+    IBeverage *pHouseBlend = new HouseBlend();
+    cout << pHouseBlend->Name() << " : " << pHouseBlend->Cost() << endl;
+
+    // 黑咖啡 + 奶油
+    CondimentDecorator *pCream = new Cream(pHouseBlend);
+    cout << pCream->Name() << " : " << pCream->Cost() << endl;
+
+    // 黑咖啡 + 摩卡
+    CondimentDecorator *pMocha = new Mocha(pHouseBlend);
+    cout << pMocha->Name() << " : " << pMocha->Cost() << endl;
+
+    // 黑咖啡 + 糖浆
+    CondimentDecorator *pSyrup = new Syrup(pHouseBlend);
+    cout << pSyrup->Name() << " : " << pSyrup->Cost() << endl;
+
+    /********** 深度烘培咖啡豆 **********/
+    IBeverage *pDarkRoast = new DarkRoast();
+    cout << pDarkRoast->Name() << " : " << pDarkRoast->Cost() << endl;
+
+    // 深度烘培咖啡豆 + 奶油
+    CondimentDecorator *pCreamDR = new Cream(pDarkRoast);
+    cout << pCreamDR->Name() << " : " << pCreamDR->Cost() << endl;
+
+    // 深度烘培咖啡豆 + 奶油 + 摩卡
+    CondimentDecorator *pCreamMocha = new Mocha(pCreamDR);
+    cout << pCreamMocha->Name() << " : " << pCreamMocha->Cost() << endl;
+
+    // 深度烘培咖啡豆 + 奶油 + 摩卡 + 糖浆
+    CondimentDecorator *pCreamMochaSyrup = new Syrup(pCreamMocha);
+    cout << pCreamMochaSyrup->Name() << " : " << pCreamMochaSyrup->Cost() << endl;
+
+    SAFE_DELETE(pSyrup);
+    SAFE_DELETE(pMocha);
+    SAFE_DELETE(pCream);
+    SAFE_DELETE(pHouseBlend);
+
+    SAFE_DELETE(pCreamMochaSyrup);
+    SAFE_DELETE(pCreamMocha);
+    SAFE_DELETE(pCreamDR);
+    SAFE_DELETE(pDarkRoast);
+
+    getchar();
+
+    return 0;
+}
 ```
 
 

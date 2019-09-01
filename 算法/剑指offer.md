@@ -35,4 +35,3 @@ CMyString& CMyString::operate=(const CMyString &str)
 }
 ```
 
-2 
