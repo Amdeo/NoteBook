@@ -602,7 +602,126 @@ echo "splitXsplitXsplitXsplitXsplit" | xargs -d X -n 2
 
 # 校验与核实
 
-111
+我们从网上下载大文件，经常要求我们校验文件完整性，将从软件中带的MD5和下载后文件生成的MD5进行比较，一样就表示文件完整，否则反之。
+
+```shell
+md5sum script.sh
+
+#output md5sum是32个字符的十六进制串
+4556bd00d254115c92fb55169e1567ae  script.sh
+```
+
+
+
+``` shell
+md5sum file1 file2 file3
+
+#[checksum1] file1
+#[checksum1] file2
+#[checksum1] file3
+```
+
+生成md5文件
+
+```shell
+md5sum file > file_sum.md
+
+md5su -c file_sum.md # 注意file_sum.md和待检验的文件放在同一目录中
+```
+
+# Sort
+
+sort命令能够帮助我们对文本文件和stdin进行排序（按行进行排序）
+
+## example
+
+````shell
+cat file_sum.md5
+#output: 4556bd00d254115c92fb55169e1567ae  script.sh
+
+#########################################################
+
+cat script.sh
+#output: 
+#! /bin/bash
+
+for i in {1..20};
+do 
+echo $i;
+done;
+#djisjs
+
+########################################################
+
+sort file_sum.md5 script.sh
+#output:
+4556bd00d254115c92fb55169e1567ae  script.sh
+#! /bin/bash
+#djisjs
+do 
+done;
+echo $i;
+for i in {1..20};
+
+#可以看出上面输出将两个文件的内容进行了合并，并按照按照行的首字符进行了排序
+````
+
+按照数字进行排序：
+
+```
+sort -n file.txt
+```
+
+按照逆序进行排序：
+
+```
+sort -r file.txt
+```
+
+按月份进行排序
+
+```
+sort -M months.txt
+```
+
+如果需要合并两个排过序的文件，而且不需要对合并后的文件再进行排序，可以使用。
+
+```
+sort -m sorted1 sorted2
+```
+
+按列进行排序
+
+```
+cat data.txt
+#output:
+1 mac       2000
+2 winxp     4000
+3 bsd       1000
+4 linux     1000
+```
+
+```
+#依据第1列，以逆序形式排序 k:指定了排序按照哪一个键（key)来进行， r:sort命令按照逆序进行排序
+sort -nrk 1 data.txt
+#output:
+4	linux	1000
+3	bsd     1000
+2	winxp   4000
+1	mac     2000
+```
+
+-b选项
+
+用于忽略文件中的前导白字符，
+
+-d选项
+
+用于指明以字典序进行排序
+
+# uniq
+
+uniq命令通过消除复杂内容，从给定输入中（stdin或命令行参数文件）找出单一的行，它也可以用来找出输入中出现的复杂行，uniq只能用于排过序的数据输入。
 
 
 
