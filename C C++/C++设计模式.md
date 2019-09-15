@@ -695,6 +695,16 @@ int main()
 
 > 将抽象部分与它的实现部分分离，使它们都可以独立地变化。
 
+**抽象所有电器**
+
+```C++
+class Electric
+{
+	virtual poweron() = 0;
+    virtual poweroff() = 0;
+}
+```
+
 
 
 
