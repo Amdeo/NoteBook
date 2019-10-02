@@ -23,3 +23,33 @@ get xxx.txt 下载xxx文件
 put xxx.txt 上传文件
 ```
 
+
+
+# ssh
+
+**centos**
+
+安装
+
+```
+yum install openssh-server
+```
+
+开启sshd服务
+
+```
+sudo service sshd start
+```
+
+检查  sshd  服务是否已经开启，输入
+
+```
+ps -e | grep sshd
+```
+
+检查  **22** 号端口是否开启监听
+
+```
+netstat -an | grep 22
+```
+
