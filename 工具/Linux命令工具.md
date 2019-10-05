@@ -35,11 +35,33 @@ put xxx.txt 上传文件
 yum install openssh-server
 ```
 
+查看是否开放22端口
+
+```
+iptables -nL
+```
+
+
+
 开启sshd服务
 
 ```
 sudo service sshd start
 ```
+
+重新启动
+
+```
+sudo service sshd restart
+```
+
+设置开机自启
+
+```
+chkconfig sshd on
+```
+
+
 
 检查  sshd  服务是否已经开启，输入
 
