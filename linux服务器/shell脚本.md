@@ -1277,6 +1277,639 @@ tree命令（这个命令需要自行安装）
 ```
 tree 目录
 ```
+# 文本操作
+
+## 正则表达式
+
+| 正则表达式 | 描述                                       | 实例                                                         |
+| ---------- | ------------------------------------------ | ------------------------------------------------------------ |
+| ^          | 行起始标记                                 | ^tux匹配以tux起始的行                                        |
+| $          | 行尾标记                                   | tux$匹配以tux结尾的行                                        |
+| .          | 匹配任意一个字符                           | yua. 可以匹配yuan或者yua1                                    |
+| []         | 匹配[字符]之中的任意的一个字符             | coo[kl]匹配cook或cool                                        |
+| [^]        | 匹配[^]之外的任意一个字符                  | 9[^01]匹配92、93，但是不匹配91或90                           |
+| [-]        | 匹配[]中指定范围内任意一个字符             | [1-5]匹配从1~5的任意一个数字                                 |
+| ?          | 匹配之前的项一次或0次                      | colou?r匹配color或colour,但是不能匹配colouur                 |
+| +          | 匹配之前的项1次或多次                      | Rollno-9+匹配ROLLno-99、Rollno-9，但是不能匹配Rollno-        |
+| *          | 匹配之前的项0次或多次                      | co*l匹配cl、col、coool等                                     |
+| ()         | 创建一个用于匹配的字串                     | ma(tri)?匹配max或maxtrix                                     |
+| {n}        | 匹配之前的项n次                            | [0-9]{3}匹配任意一个三位数，[0-9]{3}                         |
+| {n,}       | 之前的项至少需要匹配n次                    | [0-9]{2,}匹配任意一个两位或更多位的数字                      |
+| {n,m}      | 指定之前的项所必需匹配的最小次数和最大次数 | [0-9]{2,5}匹配从两位数到五位数之间的任意一个数字             |
+| \|         | 交替--------匹配\|两边的任意一项           | Oct (1st \| 2nd)匹配Oct lst或Oct 2nd                         |
+| \          | 转义符可以将上面介绍的特殊字符进行转义     | a\ .b匹配a.b,但不能匹配ajb，通过在. 之间加上前缀\,从而忽略了.的特殊意义 |
+
+## 匹配文本中所有单词
+
+```
+( ?[a-zA-Z]+ ?)
+```
+
+- "?"用于匹配单词前后可能出现的空格。[a-zA-Z]+代表一个或多个字母（a~z和A~Z）.
+
+```
+[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
+或者
+[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}
+```
+
+[0-9]或者[:digit:]匹配数字0~9。{1，3}匹配1到3个数字，\.匹配"."。
+
+## 用grep在文件中搜索文本
+
+在文件中搜索一个单词
+
+```shell
+grep match_pattern filename
+```
+
+会输出包含单词的所在行
+
+命令会返回包含给定match_pattern的文本行。
+
+```shell
+echo -e "this is a word\nnext line" | grep word
+```
+
+一个grep命令也可以对多个文件进行搜索：
+
+```shell
+grep "match_text" file1 file2 file3 ..
+```
+
+用--color选项可以在输出行中重点标记出匹配到的单词：
+
+```shell
+grep word filename --color=auto
+```
+
+grep也可以使用正则表达式，也可以使用默认允许正则表达式的grep命令-----egrep
+
+```
+grep -E "[a-z]+"
+或者
+egrep "[a-z]+"
+```
+
+为了只输出文件中匹配的文本部分，可以使用选项-o
+
+```
+echo this is a line.|grep -o -E "[a-z]+\." #output line
+```
+
+```
+grep -v match_pattern file #打印除包含match_pattern的行之外的所有行
+选项-v可以将匹配结果进行反转
+```
+
+统计文件或者文本中包含匹配字符的行数：
+
+```shell
+grep -c "text" filename #10
+```
+
+需要注意的是-c只是统计匹配行的数量，并不是匹配的次数。
+
+```shell
+echo -e "1 2 3  4\nhello\n5 6" | egrep -c "[0-9]"  #输出2
+```
+
+为了文件中统计匹配项的数量，可以使用下面的技巧：
+
+```shell
+echo -e "1 2 3  4\nhello\n5 6" | egrep -c "[0-9]" | wc -l #output:6
+```
+
+打印除包含匹配字符串的行数
+
+```shell
+grep "match_pattern" -n sample1.txt 
+```
+
+递归搜索文件
+
+```shell
+grep "text" . -R -n
+```
+
+选项-i可以使匹配样式不考虑字符的大小写，
+
+```shell
+echo hello world | grep -i "HELLO" #output:hello
+```
+
+用grep匹配多个样式
+
+在进行匹配的时候只指定一个样式。然而。我们可以用选项-e来指定多个匹配样式：
+
+```shell
+echo this is a line of text | grep -e "this" -e "line" -o #this line
+```
+
+在grep搜索中包括或排除文件
+
+```shell
+#递归搜索所有的.c和.cpp文件
+grep "main()" . -r --include *.(c,cpp) 
+#排除所有的README文件：
+grep "main()" . -r --include "README"
+#如果需要从文件中读取所需排除的文件列表，使用--exclude-from FILE
+grep "main()" . -r -exclude-from FILE
+```
+
+项目-q（grep的静默输出）
+
+在静默模式下，grep命令不会像标准输出打印任何输出。它仅是运行命令。然后根据命令执行成功与否返回退出状态
+
+
+
+## 测试文件是否包含的文件内容
+
+```shell
+#! /bin/bash
+
+#判断参数个数
+if [$# -ne 2];
+then
+echo "$0 match_text filename"
+fi
+
+match_text=$1 #第一个参数
+filename=$2 #第二个参数
+
+grep -q $match_text $filename
+
+if [$? -eq 0];then
+echo "The text exists in the file"
+eles
+echo "Text does not exist in the file"
+fi
+```
+
+打印出匹配文本之前或之后的行
+
+```shell
+grep "xxx" -A 3 #打印查找的结果后的前3行
+```
+
+```shell
+grep "xxx" -B 3 #打印查找的结果后的后3行
+```
+
+```shell
+grep "xxx" -C 3 #打印查找的结果之前以及之后的3行，使用-c选项
+```
+
+## 用cut按列切分文件
+
+```shell
+cut -f 2,3 filenaem #第2列和第3列
+```
+
+制表符是字段或列的默认定界符，没有定界符的行也会被打印出来，要避免打印出这种不包含定界符的行，则可以使用cut的-s选项
+
+```shell
+cat student_data.txt
+```
+
+```
+NO	Name　Mark	percent
+1	11	  45       90
+2	22    49       98
+3	33    45       90
+```
+
+# sed
+
+sed是stream editor的缩写。sed命令众所周知的一个用法是进行文本替换。
+
+sed可以替换给定文本中的字符串。它可以利用正则表达式进行匹配。
+
+sed是一种在线编辑器，它一次处理一行内容，处理时，把当前处理的行存储在临时缓冲区，，称为“模式空间”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用量定向存储输出。Sed主要用来自动编辑一个或多个文件，简化对文件的反复操作；编写转换程序等。
+
+
+
+## 定址
+
+定址用于决定对哪些行进行编辑。地址的形式可以是数字、正则表达式、或二者的结合。如果没有指定地址，sed将处理输入文件的所有行。
+
+地址是一个数字，则表示行号；是“$”符号，则表示最后一行。例如：
+
+```shell
+sed -n '3p' datafile #只打印第三行
+```
+
+值显示指定行范围的文件内容，例如
+
+```shell
+sed -n '100,200p' mysql_slow_query.log
+```
+
+地址是逗号分隔的，那么需要处理的地址是这两行之间的范围（包括这两行在内）。范围可以用数字、正则表达式、或二者的组合表示。例如：
+
+```shell
+sed '2,5d' datafile
+#删除第二到第五行
+
+sed '/My/,/You/d' datafile
+#删除包含“My”的行到包含"You"的行之间的行
+
+sed '/My/,10d' datafile
+#删除包含“My”的行到第十行的内容
+```
+
+
+
+3.命令与选项
+
+sed命令告诉sed如何处理有地址指定的各输入行，如果没有指定地址则处理所有的输入行。
+
+选项：
+
+-n：使用安静（silent）模式。在一般sed的用法中，所有来自STDIN的数据一般都会被列出到终端上，加上-n参数后，则只有被sed处理的那些行才会被输出。
+
+-e：指定在指令列模式上执行的命令文本。默认不需要指定，只有同时要执行多个命令文本时才需要显示的指定-e选项。
+
+-f：同时要执行多个命令文本时，可以将这些命令文本写到一个文件中，然后通过-f filename 的方式使用。
+
+-r：sed默认使用基础正则表达式语法，指定-r选项后使用扩展正则表达式语法。
+
+-i：直接修改读取的文档，而不是输出到终端。
+
+命令：
+
+a：新增行，a的后面接字串，这些字串会被添加到匹配行的下面。
+
+c：替换行，c的后面接字串，这些字符串替换掉匹配到的行。
+
+d：删除行，删除匹配到的行。
+
+i：插入行，i的后面接字符串，这些字符串会被插入到匹配行的上面
+
+p：打印，将某些行输出，通常p会与参数-n一起使用这样会输出匹配到的行。
+
+s：字符串替换，主要搭配正则表达式
+
+
+
+## 选项i
+
+如果想要直接在原文件上进行修改（其实是先修改文件的内容，然后保存到原文件中，需要使用选项I：
+
+```shell
+sed -i '1d' test.txt
+```
+
+注意，应用-i选项后命令行上没有输出内容，但是源文件被更新了。
+
+## 新增行
+
+a命令可以在匹配的行下面新增行：
+
+```shell
+sed 'la Hello world' test.txt	#在第一行下面新增一行，内容为“Hello world”
+sed '$a Hello world' test.txt	#在最后一行下面新增加一行，内容为"Hello world"
+sed '1,3a Hello world' test.txt #在第一行，第二行和第三行下面分别增加一行
+
+sed '1a Hello world!\nHello China!' test.txt #一次增加多行需要使用换行符
+```
+
+## 选项-e
+
+-e选项用来指定命令文本，如果只有一个命令文本时-e选项可以省略。如果要指定多个命令文本就需要使用-e选项。
+
+```shell
+sed -e 'la xxx' -e '2a yyy' test.txt
+```
+
+## 插入行
+
+i命令可以在匹配的行上面插入行，语法与新增行相同，只能新行在指定行的上面（与a命令的区别）：
+
+## 选项-f
+
+前面我们通过选项-e添加了多个命令文本，但是如果需要添加比较多的命令文本，使用选项-e就不合适了，应为把所有的命令文本全部写在命令行中会导致维护困难。我们可以把多个命令文本写入到文本文件中，然后通过-f选项进行引用。
+
+
+
+## 替换行
+
+使用c命令可以轻松的进行整行替换：
+
+```
+sed '1c Hello world' test.txt 	#把第一行替换为“Hello world”
+sed '1,3c Hello world' test.txt #把第一行到第三行替换为“Hello world”
+```
+
+注意，上图中命令把三行文本替换成一行文本
+
+## 字符串替换
+
+与行替换不同，s命令只替换匹配到的内容（一般为字符串）：
+
+```shell
+sed 's/Hello/Hi' hello.txt   #把Hello 替换为Hi （只能匹配第一行）
+```
+
+```shell
+sed 's/Hello/Hi/g' hello.txt #把匹配到的所有Hello都替换为Hi（匹配整个文件）
+```
+
+我们还可以限制执行替换操作的行：
+
+```shell
+sed '2,3s/Hello/Hi/g' hello.txt  #只在第二行和第三行替换操作
+```
+
+当然也可以通过替换来删除不需要的字符串：
+
+```shell
+sed 's/hello//g' hello.txt  #删除字符串hello
+```
+
+## 匹配
+
+sed所有的操作都是建立在行定位之上的。也就是说无论你要干什么，都要先找到（匹配）目标行。连最简单的删除‘1d’，也得先定位到第一行，然后才能删除，所以唯一能限制我们发挥sed能力的因素就是：如何匹配到期望的行？
+
+p命令sed只输出哪些匹配到的行，
+
+```
+sed -n '1p' test.txt
+```
+
+# awk
+
+**结构**
+
+awk "BEGIN {print "start"} pattern  {commands} END {print "end"}" file
+
+
+
+**工作原理**
+
+awk命令的工作方式如下所示：
+
+（1）执行BEGIN{commands} 语句块中语句。
+
+（2）从文件或stdin中读取一行，然后执行pattern{commands}。重复这个过程，直到文件全部被读取完毕。
+
+（3）当读至读入流末尾是，执行END{commands}语句块。
+
+BEGIN语句块在awk开始从输入流中读取行之前被执行，这是一个可选的语句块，诸如变量初始化、打印输出格式的表头等语句通常都可以写入BEGIN语句块。
+
+END语句块和BEGIN语句块类似。END语句块在awk从输入流中读取完所有的行之后即被执行。像打印所有行的分析结果这类汇总信息，都是在END语句块中实现的常见任务。它也是一个可选的语句块。
+
+最重要的部分就是pattern语句块中的通用命令。这个语句块同样是可选的。如果不提供该语句块，则默认执行{print}，即打印每一个读取到的行，都会执行这个语句块。
+
+```shell
+echo -e "line1\nline2" | awk 'BEGIN {print "Start"} {print} END{print "End"}'
+```
+
+输出如下：
+
+Start
+
+line1
+
+line2
+
+End
+
+
+
+```shell
+echo | awk '{var1="v1";var2="v2";var3="v3"; \
+print var1,var2,var3;}'
+```
+
+v1 v2 v3
+
+**特殊变量**
+
+- NR：表示记录数量（number of records）,执行过程中国对应于当前行号。
+- NF：表示字段数量（number of fields），在执行过程中对应于当前行的字段数。
+- $0：这个变量包含执过程中当前行的文本内容。
+- $1：这个变量包含第一个字段的文本内容。
+- $2：这个变量包含第二个字段的文本内容。
+
+```shell
+echo "line1 f2 f3\nline2 f4 f5\nline3 f6 f7" | \
+awk '{print "Line no:"NR",No of fields:"NF, "$0="$0,"$1="$1,"$2="$2,"$3="$3}'
+```
+
+打印每一行第2和第3个字段:
+
+```shell
+awk '{print $3,$2}' file
+```
+
+统计文件中行数
+
+```
+awk ‘END {print NR}’ file
+```
+
+
+
+# 对文件中的行、单词和字符进行迭代
+
+## (1)迭代文件中的每一行
+
+```shell
+while read line;
+do 
+echo $line
+done < file.txt
+```
+
+## (2)迭代一行中的每一个单词
+
+```
+for word in $line;
+do
+echo $word
+done
+```
+
+## (3)迭代一个单词中每一字符
+
+```
+for((i=0;i<${#word};i++))
+do
+echo $(word:i:1);
+done
+```
+
+# 按列合并文件
+
+## 可以用paste命令实现按列拼接
+
+```shell
+paste file1 file2 file3 ...
+```
+
+```
+cat paste1.txt
+1
+2
+3
+4
+5
+```
+
+```
+cat paste2.txt
+slynux
+gnu
+bash
+back
+```
+
+```
+paste paste1.txt paste2.txt
+1slynux
+2gnu
+3bash
+4hack
+5
+```
+
+## 打印文件或行中的第n个单词或列
+
+```shell
+awk '{print $5}' filename
+```
+
+也可以打印多列数据
+
+```shell
+ls -l | awk '{print $1" : " $8}' #打印第1列和第8列进行
+```
+
+# 网站下载
+
+wget是一个用于文件下载的命令行工具
+
+```shell
+wget URL
+```
+
+-o指定一个日志文件，从而不必将日志信息打印到stdout。
+
+```
+wget ftp://xxxxxxxx,img -o xxx.img -o log 
+```
+
+运行改命令，屏幕上不会显示任何内容，日志或进度信息会被写入文件log，输出文件为xxx.img
+
+-t指定重试次数
+
+```shell
+wget -t 5 URL
+```
+
+--limit-rate按照下面的方式对wget限速：
+
+```
+wget --limit-rate 20k URL
+```
+
+--quota 或 -Q指定下载量
+
+```
+wget -Q 100m URL
+```
+
+-c断点续传
+
+```
+wget -c URL
+```
+
+--mirror以递归的方式收集网页上所有的URL的链接
+
+```shell
+wget --mirror URL
+```
+
+--user和--password提供认证信息
+
+```
+wget --user username --password pass URL
+```
+
+# 网络
+
+### 打印网络接口列表
+
+```shell
+ifconfig | cut -c-10 |tr -d ' ' | tr -s '\n'
+```
+
+ifconfig 输出到前10个字符是保留用于打印网络接口的名称，因此我们用cut命令提取每一行前10个字符。tr -d ' '删除每一行的所有空格。
+
+```
+ifconfig wlan0
+```
+
+- HWaddr 00:-1c:bf:87:25:d2是硬件地址（MAC地址）
+- inet addr:192.168.0.82是IP地址
+- Bcast:192.168.3.255是广播地址
+- MASK:255.255.252.0是子网掩码
+
+### FTP自动传输
+
+```shell
+#! /bin/bash
+
+HOST='domain.com'
+USER='foo'
+PASSWD='password'
+ftp -i -n $HOST <<EOF
+user ${USER} ${PASSWD}
+binary
+cd /home/slynux
+put testfile.jpg
+get serverfile.jpg
+quit
+EOF
+```
+
+## SFTP
+
+```shell
+cd /home/slynux
+put testfile.jpg
+get serverfile.jpg
+```
+
+运行sftp：
+
+```shell
+sftp user@domainname
+```
+
+SCP
+
+scp是一项比传统远复制工具rcp更安全的文件复制技术。文件都是通过SSH加密通道进行传输
+
+```
+scp filename user@remotehost:/home/path
+```
+
+## 网络流量与端口分析
+
+要列出系统中的开发端口已经在端口上的服务的详细信息
+
+```
+lsof -i
+```
+
+用netstat查看开放端口与服务
+
+```
+netstat -tnp
+```
 
 
 
