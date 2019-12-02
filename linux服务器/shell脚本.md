@@ -918,6 +918,365 @@ Renaming next.jpg to image-3.jpg
 
 该脚本将当前目录下所有的.jpg和.png文件重命名,新文件的格式image-1.jpg、image-2.jpg、image-3.jpg、image-4.png等
 
+# 拼写检查与词典操作
+
+```shell
+#! /bin/bash
+#文件名：checkwork.sh
+word=$1
+grep "^$1$" /usr/share/dict/british-english -q
+#在grep中，^标记着单词的开始，$标记着单词的结束，-q禁止产生任何输出
+
+if [$? -eeq 0]; then
+	echo $word is a dictionary word;
+else
+	echo $word is not dictionary word;
+fi
+```
+
+```
+./checkword.sh ful
+
+ful is not a dictionary word
+
+./checkword.sh fool
+
+fool is a dictionary word
+```
+
+
+
+```shell
+#! /bin/bash
+#文件名：aspellcheck.sh
+
+word=$1
+output=`echo \"$word\" | aspell list`
+if [-z $output];then
+#-z用于确定$output是否为空
+	echo $word is a dictionary word;
+else
+	echo $word is not a dictionary word;
+fi
+```
+
+当给定的输入不是一个词典单词，aspell list命令产生输出文本，反之则不产生任何输出。 -z用于确认$output是否为空
+
+# 交互输入自动化
+
+下写一个读取交互式输入的脚本，然后用这个脚本进行自动化的演示：
+
+```
+#! /bin/bash
+#文件名：interactive.sh
+read -p "Enter number:" no;
+read -p "Enter name:" name
+echo You have entered $no,$name;
+```
+
+```shell
+echo "1\nhello\n" | ./interactive.sh
+
+output:
+You have entered 1,hello
+```
+
+用expect实现自动化
+
+expect等待特定的输入提示，通过检查输入提示来发送数据
+
+```shell
+#! /usr/bin/expect
+#文件名：automate_expect.sh
+
+spawn ./interactive.sh
+expect "Enter number:"
+send "1\n"
+expect "Enter name:"
+send "hello\n"
+expect eof
+```
+
+- spawn参数指定需要自动化哪个命令；
+- expect参数提供需要等待的消息；
+- send是要发送的消息
+- expect eof指明命令交互结束
+
+
+
+# 文件处理
+
+## 生成任意大小的文件
+
+创建特定大小的大文件最简单的方法就是利用dd命令。dd命令会克隆给定的输入内容，然后将一模一样的一份副本写入到输出。stdin、设备文件、普通文件等都可作为输入，stdout、设备文件、普通文件等也作为输出
+
+```shell
+dd if=/dev/zero of=junk.data bs=1M count=1
+```
+
+该命令会创建一个1MB大小的文件junk.data。来看下命令参数：if代表输入文件（input），of代表输出文件（output），bs代表以字节为单位的块大小（Block size），count代表被复制的块数
+
+/dev/zero是一个字符设备，它会不断返回0值字符（\0）
+
+## 文本文件的交集与差集
+
+comm命令可用于两个文件之间的比较。
+
+交集：打印出两个文件所共有的行
+
+求集：打印出指定文件所包含的且不相同的那些行
+
+差集：打印出包含在文件A中，但不包含在其他指定文件中的那些行
+
+comm命令必须使用排过序的文件作为输入
+
+```
+cat A.txt
+apple
+orange
+gold
+silver
+steel
+iron
+
+cat B.txt
+orange
+gold
+cookies
+carrot
+```
+
+```shell
+sort A.txt -o A.txt;sort B.txt -o B.txt
+
+comm A.txt B.txt
+apple	
+		carrot
+		cookies
+				gold
+iron
+				orange
+silver
+steel
+```
+
+选项：
+
+- -1从输出中删除第一列
+- -2从输出中删除第二列
+- -3从输出中删除第三列
+
+## 查找并删除重复文件
+
+xxx
+
+创建长路劲目录
+
+```shell
+mkdir dirpath
+```
+
+```shell
+if [-e /home/slynux];then
+#如果目录存在，返回真
+fi
+```
+
+```shell
+mdkir /home 2> /dev/null
+mdkri /home/slynux 2> /dev/null
+mdkri /home/slynux/test 2> /dev/null
+mdkri /home/slynux/test/hello 2> /dev/null
+mdkri /home/slynux/test/hello/child 2> /dev/null
+```
+
+如果遇到“Directory exists”这种错误，该命令会被忽略，错误信息通过2>被重定向到/dev/null
+
+```
+mkdir -p  /home/slynux/test/hello/child
+```
+
+这条命令可以替代前面5条命令，它会忽略所有有已存在的目录，同时创建缺失的部分。
+
+# 文件权限、所有权
+
+linux中文件类型：
+
+- “-” 普通文件
+- “d” 目录
+- “c” 字符设备
+- “b” 块设备
+- “l” 符号链接
+- “s” 套接字
+- “p” 管道
+
+u = 指定用户权限
+
+g = 指定用户组权限
+
+o = 指定其他实体权限
+
+```shell
+chmod o+x filename #给其他实体权限增加可执行权限
+```
+
+```shell
+chmod a+x filename #给（用户、用户组、其他用户）增加可执行权限
+```
+
+```shell
+chmod a-x filename #删除（用户、用户组、其他用户）增加可执行权限
+```
+
+r-- = 4
+
+-w- = 2
+
+--x = 1
+
+rwx = 4 +２＋１＝７
+
+rw = 4 +２＝６
+
+```shell
+chmod 764 filename
+#为用户增加读写执行
+#为用户组增加读写
+#为其他用户增加写执行
+```
+
+## 更改所有权
+
+```shell
+chown user.group filename
+#变更文件所有权为user，user是用户，group是组
+```
+
+### 以递归的方式设置权限
+
+```shell
+chmod 777 . -R
+```
+
+选项-R指定以递归的方式修改权限，“.”指定当前工作目录
+
+### 以递归的方式设置所有权
+
+用chown命令结合-R就可以以递归的方式设置所有权
+
+```shell
+chown user.group . -R
+```
+
+### 以不同的用户运行可执行文件
+
+一些可执行文件需要以不同的用户身份（除启动该文件的当前用户之外的用户），用文件路径来执行（如./executable_name）。有一个叫做setuid的特殊文件权限，他允许其他用户以文件所有者的身份来执行文件
+
+首先将该文件的所有权替换为该用户，这项操作每次都会执行，使改用户能以文件所有者的身份登入。
+
+```shell
+chmod +s executable_file
+chmod root.root executable_file
+chmod +s executable_file
+./executable_file
+```
+
+setuid的使用不是无限制的。为了确保安全，它只能应用在Linux ELF格式二进制文件上，而不能用于脚本文件。
+
+
+
+## 创建不可修改文件
+
+```
+chattr +i file #将一个文件设置为不可修改
+```
+
+使用rm file也不可使用删除文件
+
+如果需要使文件重新可写，可以移除不可修改属性：
+
+```
+chattr -i file
+```
+
+批量生成空白文件
+
+```shell
+for name in {1..100}.txt
+do
+touch $name
+done
+```
+
+touch -a 只更改文件访问时间
+
+touch -m 只更改文件内容修改时间
+
+除了将时间更改为当前时间，我们还能够为时间戳指定特定的时间和日期：
+
+```shell
+touch -d "Fri Jun 25 20:50:14 IST 1999" filename
+```
+
+-d使用的日期串不一定总是以同样的格式呈现，-d可以接受任何的目标标准日期格式。
+
+## 查看文件类型信息
+
+```shell
+file filename
+```
+
+
+
+## 显示文件内容
+
+```shell
+cat filename
+```
+
+### 打印文件的前10行和后10行
+
+```shell
+head file #默认前10行
+tail file #默认后10行
+
+head -n 4 file #打印前4行
+
+head -n -N file #打印除了最后N行之外的所有行
+```
+
+### 统计文件的行数、单词数、字符数
+
+使用wc工具
+
+```shell
+#统计行数
+wc -l file
+
+#统计file文件的行数
+cat file | wc -1
+
+#统计单词书
+wc -w file
+
+#统计字符数
+wc -c  file
+cat file |wc -c
+
+#它会打印出文件的函数、单词数、字符数，彼此之间用制表符分隔
+wc file
+
+#打印最长行的长度
+wc file -L
+```
+
+## 打印目录树
+
+tree命令（这个命令需要自行安装）
+
+```
+tree 目录
+```
 
 
 
