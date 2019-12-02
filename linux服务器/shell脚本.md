@@ -723,7 +723,200 @@ sort -nrk 1 data.txt
 
 uniq命令通过消除复杂内容，从给定输入中（stdin或命令行参数文件）找出单一的行，它也可以用来找出输入中出现的复杂行，uniq只能用于排过序的数据输入。
 
+uniq命令通过消除复杂内容，从给定输入中（stdin或命令行参数文件）找出单一的行，它也可以用来找出输入中出现的复杂行，uniq只能用于排过序的数据输入。
 
+
+
+# 分割文件和数据
+
+## spilt
+
+生成一个大小为100KB的测试文件
+
+```shell
+dd if=/dev/zero bs=100k count=1 of=data.file
+```
+
+上面的命令会创建一个伪100KB而文件内容全部是0的文件
+
+```
+#将文件分割成多个更小的文件
+spilt -b 10k data.file
+
+#将会生成很多文件 xaa xba xac xad ..........
+```
+
+```
+split -b 10k data.file -d -a 4
+#-d 生成文件名是以数据进行结尾
+#-a length就可指定后缀长度
+```
+
+如果不想按照数据块大小进行分割，而是需要根据行数来分割文件的话，可以使用`-l`
+
+```
+split -l 10 data.file
+```
+
+## cspilt
+
+cspilt是spilt工具的一个变体，spilt只能够根据大小或行数分割文件，而cspilt可以根据文本自身的特点进行分割，是否存在某个单词或文本内容都作为分割文件的条件。
+
+```
+cat server.log
+```
+
+```
+output:
+SERVER-1
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+SERVER-2
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+SERVER-3
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+[connection] 192.0.0.1 xxxxx
+```
+
+```
+cspilt server.log /SERVER/ -n 2 -s {*} -f server -b "%02d.log" ;
+```
+
+```
+ls
+server01.log server02.log server03.log server.log
+```
+
+- /SERVER用来匹配某一行，分割过程即从此处开始
+
+- /[REGEX]/表示文本样式。包括从当前行（第一行）直到（但不包括）包含“SERVER”的匹配行
+
+- {*}表示根据匹配重复执行分割，直到文件末尾为止。可以用{整数}的形式来指定分割执行的次数。
+
+- -s 使命令进入静默模式，不打印其他信息
+
+- -n指定分割后的文件名后缀的数字个数，
+
+- -f 指定分割后的文件名后缀
+
+- -b 指定后缀格式。例如“%02d.log”，类似于C语言中printf的参数格式。在这里文件名=前缀+后缀=server + %02d.log
+
+  
+
+## 根据扩展名切分文件名
+
+获取文件名
+
+```shell
+file_jpg="sample.jpg"
+name=${file_jpg%.*}
+echo File name is :$name
+```
+
+```
+output:
+
+File name is: sample
+```
+
+获取文件扩展名
+
+```shell
+extension=${file_jpg#*.}
+echo Extension is:$extension
+```
+
+```
+output:
+echo Extension is:jpg
+```
+
+${VAR%.*}
+
+- 从$VARIABLE中删除位于%左侧的通配符（在前例中是.*）所匹配的字符串。通配符从右向左进行匹配。
+- 给VAR赋值，VAR=sample.jpg.那么，通配符从右向左就会匹配到.jpg，因此，从$VAR中删除匹配结果，机会得到输出“sample”.
+
+%属于非贪婪操作，它从右到左找出匹配通配符的最短结果，还有另一个操作符%%，这个操作符与%相似，但行为模式却是贪婪的，这意味着它会匹配符合条件的最长的字符串。
+
+```
+Var=hack.fun.book.txt
+
+echo ${Var%.*}
+
+output:hack.fun.book
+
+###############################
+
+echo ${Var%%.*}
+output:hack
+```
+
+${VAR#*.}
+
+```
+VAR=hack.fun.book.txt
+
+echo ${VAR#*.}
+output:fun.book.txt
+
+echo ${VAR##*.}
+output:txt
+```
+
+example
+
+```shell
+URL="www.googl.com"
+
+echo ${URL%.*} #output:www.google
+echo ${URL%%.*} #output:www
+echo ${URL#*.} #output:google.com
+echo ${URL##*.} #com
+```
+
+
+
+# 批量重命名和移动
+
+## example
+
+```shell
+#! /bin/bash
+#文件名rename.sh
+#用途： 重命名.jpg和.png
+
+count=1;
+for img in *.log *.png
+do
+new=image-$count.${img##*.}
+
+mv "$img" "$new" 2> /dev/null
+#2> /dev/null 有时候，我并不想看到任何输出，我只想看到这条命令运行是不是正常，那么我们可以同时禁止标准输出和标准错误的输出,比如上面这个命令有任何错误信息都不会在终端上打印了
+
+if [$? -eq 0] #$? 判断最后的命令的推出状态，0表示没有错误，其他任何值表明有错误
+then
+echo "Renaming $img to $new"
+let count++
+
+fi
+done
+```
+
+执行：
+
+./rename.sh
+
+Renaming hack.jpg to image-1.jpg
+
+Renaming new.jpg to image-2.jpg
+
+Renaming next.jpg to image-3.jpg
+
+该脚本将当前目录下所有的.jpg和.png文件重命名,新文件的格式image-1.jpg、image-2.jpg、image-3.jpg、image-4.png等
 
 
 
